@@ -127,6 +127,7 @@ void moverDocumento(){
 		int contNaoMudanca = 0;
 		for(i = 0; i < D; i++){//Itera os documentos
 			guardaK = -1;
+			//Cálculo e comparação das distância 
 			for(k = 0; k < C; k++){//itera os armarios
 				d = 0.0;
 					for(j = 0; j < S; j++){//itera os assuntos
@@ -134,6 +135,7 @@ void moverDocumento(){
 						d += q;
 					}
 					
+					//guarda a maior distancia e ao armario respectivo
 					if(k == 0){
 						menorDistancia = d;
 						guardaK = 0;
@@ -147,7 +149,7 @@ void moverDocumento(){
 					for(m = 0; m < C; m++){
 						if(search_in_list(Cabinets[m].docs, i) > -1 && m != guardaK){
 							Cabinets[m].docs = remove_in_list(Cabinets[m].docs, i);
-							x = 1;
+							x = 1; //tem armário antigo diferente do armário a ser movido
 						}
 					}
 				
@@ -188,7 +190,7 @@ void lerEntrada(char *fileName) {
 	
     while (fgets(linha, 1000, arquivo) != NULL) {
         
-        token = strtok(linha, " ");
+        token = strtok(linha, " ");//split em C
         int contColuna = 0;
    		while (token != NULL) {
    			

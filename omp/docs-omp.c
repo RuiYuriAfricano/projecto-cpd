@@ -5,17 +5,17 @@
 #define MAX_S 1000
 #define MAX_C 60
 
-//Estrutura para o armário
+//Estrutura para o armï¿½rio
 typedef struct arm {
     float medias[MAX_S];
     List * docs;
 } TipoArmario;
 
-//Declaração das funções
+//Declaraï¿½ï¿½o das funï¿½ï¿½es
 void lerEntrada(char *fileName);
 void atribuirDocs();
 void calcularMedia();
-void moverDocumento();//Dentro desta função vamos calcular as distâncias
+void moverDocumento();//Dentro desta funï¿½ï¿½o vamos calcular as distï¿½ncias
 void inicializarVetor(float * vet);
 void gravarSaida();
 
@@ -24,7 +24,7 @@ void gravarSaida();
 int C = 4, D = 10, S = 3;
 float docs[MAX_D][MAX_S];
 TipoArmario Cabinets[MAX_C];
-//Função principal
+//Funï¿½ï¿½o principal
 int main(int argc, char **argv){
 		
 	//Tempo inicial
@@ -33,7 +33,7 @@ int main(int argc, char **argv){
 	int num_armarios = -1;
 
 	if (argc < 2) {
-	    printf("Erro: nome do arquivo de entrada não especificado.\n");
+	    printf("Erro: nome do arquivo de entrada nï¿½o especificado.\n");
 	    return 1;
 	}
 	
@@ -41,7 +41,7 @@ int main(int argc, char **argv){
 	//Chamar funcao lerEntrada()
 	lerEntrada(argv[1]);
 	
-	// verifica se foi passado o número de armários como argumento
+	// verifica se foi passado o nï¿½mero de armï¿½rios como argumento
 	if (argc >= 3) {
 	    num_armarios = atoi(argv[2]);
 	    C = num_armarios;
@@ -67,7 +67,7 @@ int main(int argc, char **argv){
 	moverDocumento();
 
 	
-	//chamar mostrar saída
+	//chamar mostrar saï¿½da
 	gravarSaida();
 	
 	printf("\n");
@@ -83,7 +83,7 @@ int main(int argc, char **argv){
 	
 	//tempo final
 	double tempo_final = omp_get_wtime();
-	//intervalo de tempo de execução
+	//intervalo de tempo de execuï¿½ï¿½o
 	double tempo = tempo_final - tempo_inicial;
 	
 	printf("\n\n Tempo de execucao: %fs\n", tempo);
@@ -92,7 +92,7 @@ int main(int argc, char **argv){
 	return 0;
 }
 
-//Implementação das funções
+//Implementaï¿½ï¿½o das funï¿½ï¿½es
 
 //Funcao a ser chamada inicialmente para atribuir os docs aos armarios respectivos
 void atribuirDocs(){
@@ -108,10 +108,10 @@ void atribuirDocs(){
 		}
 }
 
-//Funcao para calcular média, de cada assunto do armarios, com base nos documentos existentes neles
+//Funcao para calcular mï¿½dia, de cada assunto do armarios, com base nos documentos existentes neles
 void calcularMedia(){
 	
-	int k, i, j, l;//i-itera as linhas, j-itera as colunas, k-conta armarios, l-conta as médias
+	int k, i, j, l;//i-itera as linhas, j-itera as colunas, k-conta armarios, l-conta as mï¿½dias
 	float soma = 0.0;
 	
 	#pragma omp parallel
@@ -136,7 +136,7 @@ void calcularMedia(){
 }
 
 
-//Essa funcao é para varrer sempre o vetor dos armarios que guarda as médias. como as médias variam com base nos documentos, daí a necessidade de varrer sempre que variar.
+//Essa funcao ï¿½ para varrer sempre o vetor dos armarios que guarda as mï¿½dias. como as mï¿½dias variam com base nos documentos, daï¿½ a necessidade de varrer sempre que variar.
 void inicializarVetor(float * vet){
 	int i;
 	#pragma omp parallel barrier
@@ -177,13 +177,13 @@ void moverDocumento(){
 						guardaK = k;
 					}
 				}
-					//procurar o armario em que o documento a ser movido estava e removê-lo de lá
+					//procurar o armario em que o documento a ser movido estava e removï¿½-lo de lï¿½
 					int m, x = 0;
 					#pragma omp parallel barrier
 					{
 						#pragma omp for private(m)
 						for(m = 0; m < C; m++){
-							if(search_in_list(Cabinets[m].docs, i) > -1 && m != guardaK){//se m <> guardaK então o doc mudou de posição ou deve mudar de posição no armário
+							if(search_in_list(Cabinets[m].docs, i) > -1 && m != guardaK){//se m <> guardaK entï¿½o o doc mudou de posiï¿½ï¿½o ou deve mudar de posiï¿½ï¿½o no armï¿½rio
 								Cabinets[m].docs = remove_in_list(Cabinets[m].docs, i);
 								#pragma omp atomic
 								x = 1;
@@ -195,7 +195,7 @@ void moverDocumento(){
 					
 					int *ptr = (int*)malloc(sizeof(int));
 					*ptr = i;
-					//Move para o outro armário
+					//Move para o outro armï¿½rio
 					add_to_list(Cabinets[guardaK].docs, ptr);
 				}else{
 					contNaoMudanca++;	
@@ -207,7 +207,7 @@ void moverDocumento(){
 			if(contNaoMudanca == D) 
 				mudanca = 0;
 			else
-				calcularMedia(); //Recalcula as médias em todos armarios
+				calcularMedia(); //Recalcula as mï¿½dias em todos armarios
 			
 			
 	}while(mudanca);
@@ -261,8 +261,8 @@ void lerEntrada(char *fileName) {
 }
 
 
-//Funcao de saída
-//Nota: esta funcão não podemos paralelizar pois embora seja bem possível, porque a ordem na imprensão importa
+//Funcao de saï¿½da
+//Nota: esta funcï¿½o nï¿½o podemos paralelizar pois embora seja bem possï¿½vel, porque a ordem na imprensï¿½o importa
 void gravarSaida(){
 	
 	FILE *arquivo;
@@ -276,7 +276,7 @@ void gravarSaida(){
 	for(i = 0; i < D; i++){
 		for(k = 0; k < C; k++){
 			if(search_in_list(Cabinets[k].docs, i) > -1){
-				arquivo = fopen("docs.out", "a"); // abre o arquivo para adição
+				arquivo = fopen("docs.out", "a"); // abre o arquivo para adiï¿½ï¿½o
 				
 				//Converte inteiro para string
 				sprintf(str1, "%d", i);
